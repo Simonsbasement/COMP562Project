@@ -1,0 +1,8 @@
+all from:
+web:
+https://finance.yahoo.com/quote/[ABBV]/history
+
+actual .csv file:
+https://query1.finance.yahoo.com/v7/finance/download/[ABBV]?period1=1483228800&period2=1685491200&interval=1d&events=history&includeAdjustedClose=true
+Where [ABBV] is the abbv. of the stock of interest. 
+The data are taken from (as early as, if record exist) 20170103 - 20230531, no filter, and with a daily frenquency.
