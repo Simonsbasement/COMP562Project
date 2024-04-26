@@ -247,7 +247,6 @@ sample_valid = sample_r(last_train+1:size(sample_r, 1), :);
 label_train = label_r(1:last_train, :);
 label_valid = label_r(last_train+1:size(label_r, 1), :);
 
-tempTree = templateTree("MinParentSize", 1, "MinLeafSize", 7);
 forest = cell(label_groups, 1);
 mape_progression = zeros(label_groups, 1);
 if comp
@@ -287,11 +286,13 @@ for tree_index = 1:1:label_groups
     end
     if ~isfile("trained_trees.mat") || discard_trained_structures
         % best meta:
-        % no comp: method: ?; cyc: ?; rate: ?; min leaf size: ?
-        % comp:            ?;      ?;       ?;                ?
+        % comp: method:LSBoost;cyc:488;rate:0.26789;min leaf size:14
+        % no comp:     LSBoost;    433;     0.3595 ;               7
+        tempTree = templateTree("MinParentSize", 1, "MinLeafSize", 14);
         % rtree = fitrensemble(sample_train(:, 1:size(sample_train, 2)-1), sample_train(:, size(sample_train, 2)),"Learners",tempTree,'OptimizeHyperparameters','auto');
-        rtree = fitrensemble(sample_train(:, 1:size(sample_train, 2)-1), sample_train(:, size(sample_train, 2)), "NumLearningCycles", 451, ...
-            "method", "LSBoost", "LearnRate", 0.33, "Learners", tempTree);
+        % pause;
+        rtree = fitrensemble(sample_train(:, 1:size(sample_train, 2)-1), sample_train(:, size(sample_train, 2)), "NumLearningCycles", 488, ...
+            "method", "LSBoost", "LearnRate", 0.26789, "Learners", tempTree);
     else
         rtree = cell2struct(forest(tree_index), 't').t;
     end
